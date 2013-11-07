@@ -27,6 +27,7 @@ class FetchCommand extends Command {
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
+
         $cacheDir  = __DIR__ . '/../../../app/data';
         $cacheFile = $cacheDir . '/lastTweet.id';
 
@@ -44,7 +45,7 @@ class FetchCommand extends Command {
 
         $twitterApp = new App($appConfig);
 
-        $params = array('count' => 1);
+        $params = array('count' => 20);
 
         $since_id = 0;
         if (is_file($cacheFile)) {
