@@ -19,7 +19,7 @@ class FetchCommand extends Command {
             ->setName('zoltar:fetch')
             ->setDescription('Fetch and process mentions')
             ->addArgument(
-                'tweet_id',
+                'tweetId',
                 InputArgument::OPTIONAL,
                 'Make Zoltar answer a specific tweet'
             );
@@ -27,14 +27,22 @@ class FetchCommand extends Command {
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-
         $cacheDir  = __DIR__ . '/../../../app/data';
         $cacheFile = $cacheDir . '/lastTweet.id';
 
-        $config = $this->getApplication()->getService('config');
+        $singleTweet = false;
+        $queryPath   = '/statuses/mentions_timeline.json';
+        $params      = array('count' => 20);
 
+        $tweetId = $input->getArgument('tweetId');
+        if ($tweetId) {
+            $singleTweet = true;
+            $queryPath   = '/statuses/show.json';
+            $params      = array('id' => $tweetId);
+        }
+
+        $config = $this->getApplication()->getService('config');
         $credentials = $config['credentials'];
-        $answers = $config['answers'];
 
         $appConfig = array(
             'consumer_key'          => $credentials['consumer_key'],
@@ -45,45 +53,46 @@ class FetchCommand extends Command {
 
         $twitterApp = new App($appConfig);
 
-        $params = array('count' => 20);
-
-        $since_id = 0;
-        if (is_file($cacheFile)) {
-            $since_id = file_get_contents($cacheFile);
-        }
-
-        if ($since_id) {
-            $params['since_id'] = $since_id;
-        }
         if (!is_writable($cacheDir)) {
             $output->writeln("<error>Cache file is not writable. Please fix the permissions (we need to save the last answered tweet id, otherwise we will answer the same questions over and over).</error>");
+
             return 0;
         }
 
-        $mentions = $twitterApp->get('/statuses/mentions_timeline.json', $params);
+        if (!$singleTweet) {
+            $since_id = 0;
+            if (is_file($cacheFile)) {
+                $since_id = file_get_contents($cacheFile);
+            }
+
+            if ($since_id) {
+                $params['since_id'] = $since_id;
+            }
+        }
+
+        $content = $twitterApp->get($queryPath, $params);
 
         $count = 0;
         $mention = [];
 
-        if (isset($mentions['error'])) {
-            $output->writeln("<error>" . $mentions['error_message'] . "</error>");
+        if (isset($content['error'])) {
+            $output->writeln("<error>" . $content['error_message'] . "</error>");
+
             return 0;
         }
 
-        if (count($mentions)) {
-            foreach ($mentions as $mention) {
+        if ($singleTweet) {
+            $this->answerTweet($content, $twitterApp, $output);
+        } else {
+
+            if (!count($content)) {
+                $output->writeln("<info>No new mentions found.</info>");
+                return 1;
+            }
+
+            foreach ($content as $mention) {
                 if ($this->isQuestion($mention['text'])) {
-                    $answer = $answers[array_rand($answers)];
-
-                    $output->writeln('<info>' . $mention['text'] . '</info>');
-
-                    $author = $mention['user']['screen_name'];
-
-                    /** tweet answer */
-                    $twitterApp->update("@$author $answer", $mention['id_str']);
-
-                    $output->writeln('<info>Answered: ' . $answer . '</info>');
-
+                    $this->answerTweet($mention, $twitterApp, $output);
                     $count++;
                 }
 
@@ -100,10 +109,24 @@ class FetchCommand extends Command {
                 $output->writeln("<info>$count tweets answered.</info>");
 
             }
-        } else {
-            $output->writeln("<info>No new mentions found.</info>");
-        }
 
+            return 1;
+        }
+    }
+
+    private function answerTweet($tweet, App $twitterApp, OutputInterface $output)
+    {
+        $config  = $this->getApplication()->getService('config');
+        $answers = $config['answers'];
+
+        $answer = $answers[array_rand($answers)];
+
+        $output->writeln("<info>Answering tweet " . $tweet['id_str'] . "...</info>");
+
+        $author = $tweet['user']['screen_name'];
+
+        /** tweet answer */
+        $twitterApp->update("@$author $answer", $tweet['id_str']);
     }
 
     private function isQuestion($string)
