@@ -1,0 +1,12 @@
+#!/usr/bin/env php
+<?php
+require_once __DIR__ . '/../vendor/autoload.php';
+
+use Zoltar\Command\FetchCommand;
+
+$app = new \Cilex\Application('Zoltar', '1.0');
+
+$app->register(new \Cilex\Provider\ConfigServiceProvider(), array('config.path' => __DIR__ . '/config/config.yml'));
+
+$app->command(new FetchCommand());
+$app->run();

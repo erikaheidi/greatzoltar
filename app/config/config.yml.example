@@ -1,0 +1,24 @@
+#twitter credentials:
+credentials:
+    consumer_key: APP_CONSUMER_KEY
+    consumer_secret: APP_CONSUMER_SECRET
+    access_token: USER_ACCESS_TOKEN
+    access_token_secret: USER_ACCESS_TOKEN_SECRET
+
+answers:
+    - Yes, definitely.
+    - No way.
+    - Eventually.
+    - If you try hard enough.
+    - Im quite certain of it.
+    - Yes, indeed!
+    - You already know the answer.
+    - Don't be ridiculous.
+    - Everything is possible.
+    - Forget about it.
+    - Maybe another day...
+    - The answer is inside you.
+    - This is going to happen.
+    - This is out of my jurisdiction.
+    - The stars say YES.
+    - The stars say NO.

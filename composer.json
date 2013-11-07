@@ -1,0 +1,15 @@
+{
+    "autoload": {
+        "psr-0": { "Zoltar\\": "src/" }
+    },
+    "repositories": [{
+        "type": "vcs",
+        "url": "https://github.com/erikaheidi/tmhOAuth.git"
+    }],
+    "require": {
+        "cilex/cilex": "dev-master",
+        "ttools/ttools": "dev-master",
+        "symfony/yaml": "2.3.*",
+        "tmhoauth/tmhoauth": "dev-ttools"
+    }
+}
