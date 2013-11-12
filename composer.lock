@@ -3,7 +3,7 @@
         "This file locks the dependencies of your project to a known state",
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file"
     ],
-    "hash": "69afbccf04801d7afa3f0ce406f3bb6a",
+    "hash": "e2e84fbd13d24227e0f87067fa475df8",
     "packages": [
         {
             "name": "cilex/cilex",
@@ -364,62 +364,17 @@
             "time": "2013-09-22 18:04:39"
         },
         {
-            "name": "tmhoauth/tmhoauth",
-            "version": "dev-ttools",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/erikaheidi/tmhOAuth.git",
-                "reference": "39f0f6a8ef32fa4fb082a50ceacf680b93df5103"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/erikaheidi/tmhOAuth/zipball/39f0f6a8ef32fa4fb082a50ceacf680b93df5103",
-                "reference": "39f0f6a8ef32fa4fb082a50ceacf680b93df5103",
-                "shasum": ""
-            },
-            "require": {
-                "ext-curl": "*",
-                "php": ">=5.3.0"
-            },
-            "type": "library",
-            "autoload": {
-                "psr-0": {
-                    "tmhOAuth": "src/"
-                }
-            },
-            "license": [
-                "Apache-2.0"
-            ],
-            "authors": [
-                {
-                    "name": "themattharris",
-                    "email": "matt@themattharris.com",
-                    "role": "Developer"
-                }
-            ],
-            "description": "An OAuth 1.0A library written in PHP by @themattharris, specifically for use with the Twitter API",
-            "keywords": [
-                "oauth",
-                "twitter"
-            ],
-            "support": {
-                "issues": "https://github.com/themattharris/tmhOAuth/issues",
-                "source": "https://github.com/erikaheidi/tmhOAuth/tree/master"
-            },
-            "time": "2013-04-02 18:54:40"
-        },
-        {
             "name": "ttools/ttools",
             "version": "dev-master",
             "source": {
                 "type": "git",
                 "url": "https://github.com/ttools/ttools.git",
-                "reference": "3ecf38f59fb9b800544e6f37df15bbf007302c35"
+                "reference": "bd87bd3c0bc597e6920eb5ef6081b9a193c92cfa"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/ttools/ttools/zipball/3ecf38f59fb9b800544e6f37df15bbf007302c35",
-                "reference": "3ecf38f59fb9b800544e6f37df15bbf007302c35",
+                "url": "https://api.github.com/repos/ttools/ttools/zipball/bd87bd3c0bc597e6920eb5ef6081b9a193c92cfa",
+                "reference": "bd87bd3c0bc597e6920eb5ef6081b9a193c92cfa",
                 "shasum": ""
             },
             "type": "library",
@@ -439,11 +394,11 @@
                 }
             ],
             "description": "A Twitter API wrapper library",
-            "homepage": "http://erikaheidi.github.com/ttools",
+            "homepage": "http://ttools.github.io/ttools/",
             "keywords": [
                 "twitter"
             ],
-            "time": "2013-11-07 01:28:23"
+            "time": "2013-11-12 15:16:34"
         }
     ],
     "packages-dev": [
@@ -455,8 +410,7 @@
     "minimum-stability": "stable",
     "stability-flags": {
         "cilex/cilex": 20,
-        "ttools/ttools": 20,
-        "tmhoauth/tmhoauth": 20
+        "ttools/ttools": 20
     },
     "platform": [
 

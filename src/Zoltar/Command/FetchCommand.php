@@ -126,7 +126,11 @@ class FetchCommand extends Command {
         $author = $tweet['user']['screen_name'];
 
         /** tweet answer */
-        $twitterApp->update("@$author $answer", $tweet['id_str']);
+        $result = $twitterApp->update("@$author $answer", $tweet['id_str']);
+
+        if (isset($result['error'])) {
+            $output->writeln("<error>An error ocurred: " . $result['error_message'] . "</error>");
+        }
     }
 
     private function isQuestion($string)
